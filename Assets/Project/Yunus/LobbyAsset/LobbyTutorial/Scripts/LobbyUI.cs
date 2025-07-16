@@ -20,6 +20,7 @@ public class LobbyUI : MonoBehaviour {
     [SerializeField] private Button changeMarineButton;
     [SerializeField] private Button changeNinjaButton;
     [SerializeField] private Button leaveLobbyButton;
+    [SerializeField] private Button startGameButton;
 
 
     private void Awake() {
@@ -37,6 +38,10 @@ public class LobbyUI : MonoBehaviour {
         leaveLobbyButton.onClick.AddListener(() => {
             LobbyManager.Instance.LeaveLobby();
         });
+
+        startGameButton.onClick.AddListener(() => {
+            LobbyManager.Instance.StartGame();
+        });
     }
 
     private void Start() {
@@ -45,7 +50,11 @@ public class LobbyUI : MonoBehaviour {
 
         LobbyManager.Instance.OnLeftLobby += LobbyManager_OnLeftLobby;
         LobbyManager.Instance.OnKickedFromLobby += LobbyManager_OnLeftLobby;
-
+        LobbyManager.Instance.OnGameStarted += (sender, e) => {
+            var canvas = GetComponentInParent<Canvas>();
+            if (canvas != null)
+                canvas.enabled = false;
+        };
         Hide();
     }
 
@@ -84,6 +93,7 @@ public class LobbyUI : MonoBehaviour {
         playerCountText.text = lobby.Players.Count + "/" + lobby.MaxPlayers;
         joinCode.text=lobby.LobbyCode;
 
+        startGameButton.gameObject.SetActive(LobbyManager.Instance.IsLobbyHost());
 
 
         Show();

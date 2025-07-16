@@ -15,11 +15,12 @@ public class LobbyManager : MonoBehaviour {
 
     public const string KEY_PLAYER_NAME = "PlayerName";
     public const string KEY_PLAYER_CHARACTER = "Character";
+    public const string KEY_START_GAME = "Start";
 
 
 
     public event EventHandler OnLeftLobby;
-
+    public event EventHandler<EventArgs> OnGameStarted;
     public event EventHandler<LobbyEventArgs> OnJoinedLobby;
     public event EventHandler<LobbyEventArgs> OnJoinedLobbyUpdate;
     public event EventHandler<LobbyEventArgs> OnKickedFromLobby;
@@ -117,6 +118,17 @@ public class LobbyManager : MonoBehaviour {
 
                     joinedLobby = null;
                 }
+
+                if (joinedLobby.Data[KEY_START_GAME].Value != "0")
+                {
+                    if (!IsLobbyHost())
+                    {
+                        TestRelay.Instance.JoinRelay(joinedLobby.Data[KEY_START_GAME].Value);
+                    }
+                    joinedLobby = null;
+
+                    OnGameStarted?.Invoke(this,EventArgs.Empty);
+                }
             }
         }
     }
@@ -155,7 +167,10 @@ public class LobbyManager : MonoBehaviour {
         CreateLobbyOptions options = new CreateLobbyOptions {
             Player = player,
             IsPrivate = isPrivate,
-            
+            Data=new Dictionary<string, DataObject>
+            {
+                {KEY_START_GAME,new DataObject(DataObject.VisibilityOptions.Member,"0") }
+            }
         };
 
         Lobby lobby = await LobbyService.Instance.CreateLobbyAsync(lobbyName, maxPlayers, options);
@@ -301,6 +316,31 @@ public class LobbyManager : MonoBehaviour {
             try {
                 await LobbyService.Instance.RemovePlayerAsync(joinedLobby.Id, playerId);
             } catch (LobbyServiceException e) {
+                Debug.Log(e);
+            }
+        }
+    }
+    public async void StartGame()
+    {
+        if (IsLobbyHost())
+        {
+            try
+            {
+                Debug.Log("StartGame");
+
+                string relayCode = await TestRelay.Instance.CreateRelay();
+
+                Lobby lobby = await LobbyService.Instance.UpdateLobbyAsync(joinedLobby.Id, new UpdateLobbyOptions
+                {
+                    Data = new Dictionary<string, DataObject>
+                    {
+                        { KEY_START_GAME, new DataObject(DataObject.VisibilityOptions.Member, relayCode) }
+                    }
+                });
+            }
+            catch (LobbyServiceException e)
+            {
+
                 Debug.Log(e);
             }
         }

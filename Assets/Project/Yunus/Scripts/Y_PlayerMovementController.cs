@@ -1,7 +1,8 @@
+using Unity.Netcode;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
-public class Y_PlayerMovementController : MonoBehaviour
+public class Y_PlayerMovementController : NetworkBehaviour
 {
     [Header("Movement Settings")]
     public float moveSpeed = 5f;
@@ -10,6 +11,7 @@ public class Y_PlayerMovementController : MonoBehaviour
     public float jumpForce = 5f;
 
     [Header("Camera Settings")]
+    public Camera playerCamera;
     public Transform cameraRoot;
     public float mouseSensitivity = 2f;
     public float minPitch = -80f;
@@ -43,10 +45,26 @@ public class Y_PlayerMovementController : MonoBehaviour
         originalHeight = col.height;
         Cursor.lockState = CursorLockMode.Locked;
         cameraRootDefaultLocalPos = cameraRoot.localPosition;
+
+        if (playerCamera == null)
+            playerCamera = GetComponentInChildren<Camera>(true);
+    }
+    public override void OnNetworkSpawn()
+    {
+        // Sadece owner'ýn kamerasýný aktif et
+        if (IsOwner && playerCamera != null)
+        {
+            playerCamera.gameObject.SetActive(true);
+        }
+        else if (playerCamera != null)
+        {
+            playerCamera.gameObject.SetActive(false);
+        }
     }
 
     void Update()
     {
+        if(!IsOwner) return;
         HandleMouseLook();
         HandleCrouch();
         HandleJump();
