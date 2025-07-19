@@ -3,16 +3,16 @@ using UnityEngine;
 
 public class SwitchManager : MonoBehaviour
 {
-    public static SwitchManager Instance;
-
     private Dictionary<int, bool> switchStates = new Dictionary<int, bool>();
-    [SerializeField] private Animator doorAnimator;
+
+    [Header("Door Logic")]
+    [SerializeField] private List<int> mustBeUp; // Bu switch ID'leri yukarýda olmalý
+    [SerializeField] private Animator doorAnimator; // Baðlý kapýnýn animatörü
+    [SerializeField] private string doorTriggerName = "OpenDungeonDoor"; // Kapý açma trigger'ý
 
     void Awake()
     {
-        if (Instance == null) Instance = this;
-
-        // Baþlangýçta tüm switch'ler aþaðýda
+        // Baþlangýçta tüm switch'ler false (aþaðýda)
         for (int i = 1; i <= 9; i++)
             switchStates[i] = false;
     }
@@ -25,22 +25,18 @@ public class SwitchManager : MonoBehaviour
 
     void CheckDoorCondition()
     {
-        // 1, 3, 7, 8 => yukarýda (true) olmalý
-        int[] mustBeUp = { 1, 3, 7, 8 };
-
+        // Belirlenen switch'ler yukarýda olmalý
         foreach (int id in mustBeUp)
         {
             if (!switchStates.ContainsKey(id) || !switchStates[id])
-                return; // Þart saðlanmýyor
+                return;
         }
 
-        // Diðer switch'ler => aþaðýda (false) olmalý
+        // Diðer tüm switch'ler aþaðýda olmalý
         for (int i = 1; i <= 9; i++)
         {
-            if (System.Array.IndexOf(mustBeUp, i) == -1)
-            {
-                if (switchStates[i]) return; // Aþaðýda olmasý gereken switch yukarýda
-            }
+            if (!mustBeUp.Contains(i) && switchStates[i])
+                return;
         }
 
         // Þartlar saðlandý, kapýyý aç
@@ -49,7 +45,7 @@ public class SwitchManager : MonoBehaviour
 
     void OpenDoor()
     {
-        Debug.Log("Kapý Açýldý!");
-        doorAnimator.SetTrigger("OpenDungeonDoor");
+        Debug.Log("Kapý Açýldý: " + doorTriggerName);
+        doorAnimator.SetTrigger(doorTriggerName);
     }
 }
