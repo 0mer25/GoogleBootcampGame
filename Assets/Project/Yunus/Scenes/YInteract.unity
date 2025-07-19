@@ -524,8 +524,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 10, y: -0.000024796}
+  m_SizeDelta: {x: 356.345, y: 84.4323}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &617544204
 MonoBehaviour:
@@ -549,11 +549,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: e3265ab4bf004d28a9537516768c1c75, type: 3}
-    m_FontSize: 15
+    m_FontSize: 47
     m_FontStyle: 1
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 40
+    m_MaxSize: 51
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
@@ -942,7 +942,7 @@ Transform:
   m_GameObject: {fileID: 1082098368}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.63, y: 1.29, z: -1.6}
+  m_LocalPosition: {x: 2.63, y: 1.29, z: -4.406}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1392,7 +1392,7 @@ Transform:
   m_GameObject: {fileID: 1792454390}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.524, y: 1.281, z: 1.874}
+  m_LocalPosition: {x: 2.524, y: 1.281, z: 3.472}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1538,7 +1538,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetObject: {fileID: 339747605}
   offset: {fileID: 1735245209}
-  tableObject: {fileID: 1192070996}
   _canva: {fileID: 388454963}
   isExamining: 0
 --- !u!4 &1939349361

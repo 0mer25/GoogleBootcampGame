@@ -3,13 +3,10 @@ using UnityEngine;
 public class Object_Interact : MonoBehaviour
 {
     [Header("Drag your player here (with Y_PlayerMovementController)")]
-    public GameObject targetObject; // Player objeni Inspector’dan atayacaksýn
+    public GameObject targetObject; // Player objesini Inspector’dan atayacaksýn
 
     [Header("Object will move here when examining")]
     public GameObject offset;
-
-    [Header("Set your examine area/table here (optional)")]
-    public GameObject tableObject;
 
     [Header("Assign your Canvas here")]
     public Canvas _canva;
@@ -43,7 +40,7 @@ public class Object_Interact : MonoBehaviour
                         examinedObject = hit.collider.gameObject;
                         originalPosition = examinedObject.transform.position;
                         originalRotation = examinedObject.transform.rotation;
-                        if (CheckUserClose())
+                        if (CheckUserClose(examinedObject))
                         {
                             StartExamination();
                         }
@@ -64,7 +61,17 @@ public class Object_Interact : MonoBehaviour
         }
         else
         {
-            _canva.enabled = CheckUserClose();
+            // Sadece oyuncu objeye yakýnsa canvas açýlýr (örn: "E'ye basarak inceleyebilirsin" göstergesi)
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            if (Physics.Raycast(ray, out hit, 3f) && hit.collider.CompareTag("Object"))
+            {
+                _canva.enabled = CheckUserClose(hit.collider.gameObject);
+            }
+            else
+            {
+                _canva.enabled = false;
+            }
         }
     }
 
@@ -78,7 +85,7 @@ public class Object_Interact : MonoBehaviour
         // Hareket ve mouse look scriptini kapat
         if (targetObject != null)
         {
-            var moveScript = targetObject.GetComponent<O_PlayerMovementController>();
+            var moveScript = targetObject.GetComponent<PlayerMovement>();
             if (moveScript != null)
                 moveScript.enabled = false;
         }
@@ -93,7 +100,7 @@ public class Object_Interact : MonoBehaviour
         // Hareket ve mouse look scriptini tekrar aç
         if (targetObject != null)
         {
-            var moveScript = targetObject.GetComponent<O_PlayerMovementController>();
+            var moveScript = targetObject.GetComponent<PlayerMovement>();
             if (moveScript != null)
                 moveScript.enabled = true;
         }
@@ -123,10 +130,10 @@ public class Object_Interact : MonoBehaviour
         lastMousePosition = Input.mousePosition;
     }
 
-    bool CheckUserClose()
+    bool CheckUserClose(GameObject obj)
     {
-        if (targetObject == null || tableObject == null) return true; // Table boþsa hep true
-        float distance = Vector3.Distance(targetObject.transform.position, tableObject.transform.position);
-        return (distance < 2f);
+        if (targetObject == null || obj == null) return false;
+        float distance = Vector3.Distance(targetObject.transform.position, obj.transform.position);
+        return (distance < 2f); // 2 birimden yakýnda ise etkileþim aktif
     }
 }
