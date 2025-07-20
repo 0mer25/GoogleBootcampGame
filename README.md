@@ -119,7 +119,7 @@ Bu sprintte hedefimiz, oyun dünyasının daha fazla şekillenmesi ve temel oyna
 
 ### 📋 Sprint Planı (Sprint Board)
 
-![Sprint Board](Assets/OyunGorsellerivePlanlamalar/Sprint_ Planning.jpg)
+![Sprint Board](Assets/OyunGorsellerivePlanlamalar/Sprint_Planning.jpg)
 
 | Durum        | Görevler                                |
 |--------------|------------------------------------------|
