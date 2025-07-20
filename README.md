@@ -23,6 +23,7 @@
 - Oyuncular arasında görev tamamlama ve puan toplama temelli mücadele
 - 
 
+
 ## Hedef Kitle
 - Eğlenceli ve hızlı tempolu çok oyunculu oyunlara ilgi duyanlar
 - Co-op veya rekabetçi mekanikleri deneyimlemek isteyen arkadaş grupları
@@ -54,12 +55,18 @@ Aşağıda yer alan sprint board ekranı üzerinden görevlerin dağılımı tak
 
 ---
 
+
+
+### Daily Scrum
+Resmi olarak her gün yapılan Daily Scrum toplantılarımız olmadı ancak ekip olarak çoğu akşam kısa toplantılarla bir araya geldik. Bu buluşmalarda o gün yapılan ilerlemeler, karşılaşılan teknik sorunlar ve görev paylaşımı üzerine konuştuk. İletişim ağırlıklı olarak Microsoft Teams ve WhatsApp üzerinden sağlandı. Bu sayede herkes proje gelişmelerinden haberdar oldu ve görev dağılımı netleşti.
+
+
+
 ## Tahmini Puanlama ve Mantık
 - Görevler, karmaşıklıklarına göre 1 ile 5 arasında puanlandı.
 - Bu sprintte toplam 8 story point tamamlanması hedeflendi.
 - Planlama yapılırken ekip üyelerinin deneyim düzeyi ve önceki görev süreleri dikkate alındı.
 
----
 
 ## Görseller
 
@@ -98,5 +105,6 @@ Hazırlayan: Scrum Master - Rana
  İyi Gidenler: Görev dağılımı, iletişim ve planlama başarılıydı.
 
  Zorlayanlar: Teknik entegrasyonlarda yaşanan ufak gecikmeler.
+
 
  Gelecek Sprint İçin: Bitmemiş işler önceliklendirilip devam edilecek. Görev tamamlama için daha kısa süreli mini hedefler belirlenecek.
