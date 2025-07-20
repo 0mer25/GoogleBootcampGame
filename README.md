@@ -21,7 +21,6 @@
 - 3D birinci şahıs kamera ile oynanış
 - Co-op veya rekabetçi multiplayer deneyimi
 - Oyuncular arasında görev tamamlama ve puan toplama temelli mücadele
-- 
 
 
 ## Hedef Kitle
