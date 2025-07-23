@@ -7,6 +7,8 @@ public class R_PlayerInteract : MonoBehaviour
     public Transform cameraHolder;
     public GameObject swingPromptUI;
     public GameObject swingExitPromptUI;
+    public SayiliPanelController sayiliPanel;
+
 
     public AudioSource audioSource;
     public AudioClip correctSound;
@@ -83,9 +85,11 @@ public class R_PlayerInteract : MonoBehaviour
         {
             swingController.StopSwing();
             isOnSwing = false;
+            sayiliPanel.PaneliAktifEt();
+
         }
 
-       
+
         if (hasJustMountedSwing)
         {
             hasJustMountedSwing = false;
