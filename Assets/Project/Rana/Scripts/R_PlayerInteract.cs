@@ -7,13 +7,10 @@ public class R_PlayerInteract : MonoBehaviour
     public Transform cameraHolder;
     public GameObject swingPromptUI;
     public GameObject swingExitPromptUI;
-    public SayiliPanelController sayiliPanel;
-
 
     public AudioSource audioSource;
     public AudioClip correctSound;
     public AudioClip wrongSound;
-
 
     public R_PanelController panelController;
     public int correctTargetIndex;
@@ -22,73 +19,55 @@ public class R_PlayerInteract : MonoBehaviour
     private bool isNearSwing = false;
     private bool hasJustMountedSwing = false;
 
+    private float swingTime = 0f;
+    public float swingSpeed = 2f;
+    public float swingAmplitude = 0.2f;
+    private Vector3 initialCameraLocalPos;
+
+    void Start()
+    {
+        initialCameraLocalPos = cameraHolder.localPosition;
+    }
+
     void Update()
     {
-        //Salıncağa bin yazısı 
         swingPromptUI.SetActive(isNearSwing && !isOnSwing);
-
-        // Çözüm sonrası çık yazısı (salıncaktayken + puzzle tamamlandıysa)
         swingExitPromptUI.SetActive(isOnSwing && panelController.IsPuzzleComplete());
 
-        
         if (Input.GetKeyDown(KeyCode.E) && !isOnSwing && isNearSwing)
         {
-            cameraHolder.position = swingController.swingSeat.position;
-
-            // 🎥 Kamerayı salıncağa göre döndür
-            Vector3 toSwing = (swingController.swingSeat.position - transform.position).normalized;
-            Vector3 swingForward = swingController.swingSeat.forward;
-
-            toSwing.y = 0;
-            swingForward.y = 0;
-
-            float angle = Vector3.Angle(swingForward, toSwing);
-            float signedAngle = Vector3.SignedAngle(swingForward, toSwing, Vector3.up);
-
-            Quaternion targetRotation;
-
-            if (angle < 45f)
-                targetRotation = Quaternion.LookRotation(swingForward);
-            else if (angle > 135f)
-                targetRotation = Quaternion.LookRotation(-swingForward);
-            else if (signedAngle > 0)
-                targetRotation = Quaternion.LookRotation(Quaternion.Euler(0, -90, 0) * swingForward);
-            else
-                targetRotation = Quaternion.LookRotation(Quaternion.Euler(0, 90, 0) * swingForward);
-
-            cameraHolder.rotation = targetRotation;
-
-            swingController.StartSwing();
             isOnSwing = true;
             hasJustMountedSwing = true;
+            swingController.StartSwing();
         }
-
-        
         else if (Input.GetKeyDown(KeyCode.E) && isOnSwing && !hasJustMountedSwing)
         {
             if (panelController.GetCurrentLightIndex() == correctTargetIndex)
             {
-                Debug.Log(" Doğru anda bastın! PUZZLE İLERLEDİ ");
-                audioSource.PlayOneShot(correctSound); 
+                Debug.Log("✅ Doğru anda bastın! PUZZLE İLERLEDİ");
+                audioSource.PlayOneShot(correctSound);
                 panelController.GoToNextStep();
             }
             else
             {
-                Debug.Log(" Yanlış anda bastın, tekrar dene!");
-                audioSource.PlayOneShot(wrongSound); 
+                Debug.Log("❌ Yanlış anda bastın, tekrar dene!");
+                audioSource.PlayOneShot(wrongSound);
             }
         }
 
-
-        
         if (Input.GetKeyDown(KeyCode.Escape) && isOnSwing)
         {
-            swingController.StopSwing();
             isOnSwing = false;
-            sayiliPanel.PaneliAktifEt();
-
+            swingController.StopSwing();
+            cameraHolder.localPosition = initialCameraLocalPos;
         }
 
+        if (isOnSwing)
+        {
+            swingTime += Time.deltaTime * swingSpeed;
+            float yOffset = Mathf.Sin(swingTime) * swingAmplitude;
+            cameraHolder.localPosition = initialCameraLocalPos + new Vector3(0, yOffset, 0);
+        }
 
         if (hasJustMountedSwing)
         {
@@ -108,6 +87,9 @@ public class R_PlayerInteract : MonoBehaviour
             isNearSwing = false;
     }
 }
+
+
+
 
 
 
