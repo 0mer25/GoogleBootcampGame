@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class R_SwingController : MonoBehaviour
 {
-    public Transform swingSeat; // Kameranýn geçici baðlanacaðý yer
+    public Transform swingSeat;
     public float swingSpeed = 2f;
     public float swingAmount = 0.3f;
 
