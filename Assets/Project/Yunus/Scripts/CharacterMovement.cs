@@ -1,7 +1,8 @@
+using Unity.Netcode;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
-public class CharacterMovement : MonoBehaviour
+public class CharacterMovement : NetworkBehaviour
 {
     [Header("Player")]
     [Tooltip("Move speed of the character in m/s")]
@@ -53,6 +54,8 @@ public class CharacterMovement : MonoBehaviour
     [Header("Camera Settings")]
     [Tooltip("Ana kamera objesi (karakterin çocuğu veya sahnede ana kamera).")]
     public Camera MainCamera;
+    public Transform cameraRoot;
+
 
     [Tooltip("How far in degrees can you move the camera up")]
     public float TopClamp = 70.0f;
@@ -101,18 +104,31 @@ public class CharacterMovement : MonoBehaviour
     private bool _jumpInput;
     private bool _sprintInput;
 
+
+    private NetworkVariable<Quaternion> netRotation = new NetworkVariable<Quaternion>(
+    writePerm: NetworkVariableWritePermission.Owner);
+    public override void OnNetworkSpawn()
+    {
+        // Sadece owner'ın kamerasını aktif et
+        if (IsOwner && MainCamera != null)
+        {
+            MainCamera.gameObject.SetActive(true);
+        }
+        else if (MainCamera != null)
+        {
+            MainCamera.gameObject.SetActive(false);
+        }
+    }
+
     private void Awake()
     {
         if (MainCamera == null)
-        {
-            MainCamera = Camera.main;
-        }
+            MainCamera = GetComponentInChildren<Camera>(true);
     }
 
     private void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        
         _targetYaw = transform.rotation.eulerAngles.y;
         _targetPitch = 0f;
 
@@ -128,16 +144,26 @@ public class CharacterMovement : MonoBehaviour
 
     private void Update()
     {
+        if(!IsOwner) return;
         ReadClassicInputs();
 
         JumpAndGravity();
         GroundedCheck();
         Move();
+        netRotation.Value = transform.rotation;
     }
 
     private void LateUpdate()
     {
-        CameraRotation();
+        if (IsOwner)
+        {
+            CameraRotation();
+        }
+        else
+        {
+            // Owner değilsek, rotasyonu sync edilmiş değerden çek
+            transform.rotation = netRotation.Value;
+        }
     }
 
     private void AssignAnimationIDs()
@@ -198,9 +224,9 @@ public class CharacterMovement : MonoBehaviour
         _targetPitch = ClampAngle(_targetPitch, BottomClamp, TopClamp);
 
         // Karakterin child'ı olan ana kameraya uygula (FPS benzeri)
-        if (MainCamera != null)
+        if (cameraRoot != null)
         {
-            MainCamera.transform.localRotation = Quaternion.Euler(_targetPitch + CameraAngleOverride, 0.0f, 0.0f);
+            cameraRoot.localRotation = Quaternion.Euler(_targetPitch + CameraAngleOverride, 0.0f, 0.0f);
             transform.rotation = Quaternion.Euler(0.0f, _targetYaw, 0.0f);
         }
     }
