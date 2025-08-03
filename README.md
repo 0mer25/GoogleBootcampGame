@@ -1,4 +1,4 @@
-# 🎮 Oyun
+# 🎮 The Lost Laughter
 
 ## Takım İsmi
 **Toplanamayanlar**
@@ -16,11 +16,13 @@
   
 
 ## Oyun İsmi
-**Henüz bulunmadı**
+**The Lost Laughter**
 
 
 ## Oyun Açıklaması
-
+"Kaybolan Çocuklar: Saklambaçta Kayıp", interaktif bir keşif ve bulmaca çözme oyunudur. Oyunda iki kardeş, Mert (12) ve Kerem (8), kalabalık bir çocuk parkında saklambaç oynarken bir anda tüm çocukların kaybolduğunu fark eder. Oyun boyunca oyuncu, Mert ve Kerem’i kontrol ederek gizemli bir şekilde boşalan parkı keşfeder, ardı ardına gelen akıl yürütme bulmacalarını çözerek kardeşlerin ilerlemesini sağlar.
+Oyuncular, her bir puzzle’ı çözdükçe yeni bir alanın kilidini açar ve kaybolan çocuklara biraz daha yaklaşır. Oyun sonunda tüm bulmacalar çözüldüğünde sihirli bir geçit açılır ve kardeşler kaybolan çocukların fantastik bir dünyada güvenle oynadığını keşfeder. Oyuncuya verilen temel mesaj: Kardeşlik, zorlukların üstesinden gelmenin anahtarıdır.
+Bu proje; hikâye anlatımı, etkileşimli bulmaca tasarımı ve görsel atmosfer kullanımıyla çocuklar için hem düşündürücü hem de duygusal bir dijital deneyim sunmayı amaçlamaktadır.
 
 ## Oyun Özellikleri
 - 3D birinci şahıs kamera ile oynanış
