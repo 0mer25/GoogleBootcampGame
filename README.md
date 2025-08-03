@@ -261,7 +261,7 @@ Hedefler:
 
 ### ☕ Daily Scrum
 Takım olarak çoğu akşam kısa değerlendirme konuşmaları gerçekleştirildi. Teams ve WhatsApp üzerinden yapılan bu konuşmalarda görevlerin durumu, yaşanan problemler ve çözüm yolları paylaşıldı.
-Daily Scrum notlarımızı görmek için [buraya tıklayın](https://imgur.com/a/daily-scrum-QK5qE7o).
+Daily Scrum notlarımızı görmek için [buraya tıklayın](https://imgur.com/a/A4gecWt).
 
 ## 🖼️ Tamamlanan Özellikler
 
