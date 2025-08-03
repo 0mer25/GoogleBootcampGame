@@ -303,7 +303,7 @@ Sunum ve testler için hazır.
 | Ultimate Low Poly Dungeon | [Asset Store](https://assetstore.unity.com/packages/3d/environments/dungeons/ultimate-low-poly-dungeon-143535) | İç mekân/zindan bölümleri, koridorlar           |
 | Keypad                    | [Asset Store](https://assetstore.unity.com/packages/3d/props/electronics/keypad-free-262151) | Şifre paneli (puzzle)                           |
 | Rune Pack                 | [Kenney](https://kenney.nl/assets/rune-pack)                         | Sembol/rune ikonları, puzzle ipuçları görselleri |
-| Character Model           | [Asset Store]([https://kenney.nl/assets/rune-pack](https://assetstore.unity.com/packages/3d/characters/humanoids/fantasy/stylized-npc-peasant-nolant-demo-252440?srsltid=AfmBOooUmp_iLWaS-6ZZO45n_npocVxzpuHP31gtOXrJs0jQohTJi8jF))                         | Karakter modeli|
+| Character Model           | [Asset Store](https://assetstore.unity.com/packages/3d/characters/humanoids/fantasy/stylized-npc-peasant-nolant-demo-252440?srsltid=AfmBOooUmp_iLWaS-6ZZO45n_npocVxzpuHP31gtOXrJs0jQohTJi8jF))                         | Karakter modeli|
 
 
 
