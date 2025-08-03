@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using Unity.Netcode;
+using UnityEngine;
 using TMPro;
 
-public class PuzzleManager : MonoBehaviour
+public class PuzzleManager : NetworkBehaviour
 {
     [Header("Genel Ayarlar")]
     public GameObject cardakObject;
@@ -12,37 +13,64 @@ public class PuzzleManager : MonoBehaviour
     public GameObject cardakSpecialObject;
     public GameObject thirdPanelObject;
 
-    private int interactionCount = 0;
+    private NetworkVariable<int> interactionCount = new NetworkVariable<int>(0,
+        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     private void Start()
     {
         if (cardakSpecialObject != null)
             cardakSpecialObject.SetActive(false);
-
         if (thirdPanelObject != null)
             thirdPanelObject.SetActive(false);
+
+        // NetworkVariable değişiklik dinleyicisi
+        interactionCount.OnValueChanged += OnInteractionCountChanged;
     }
 
-    public void RegisterInteraction(GameObject interactedObject)
+    public override void OnDestroy()
     {
-        interactionCount++;
-        string name = interactedObject.name;
+        if (interactionCount != null)
+            interactionCount.OnValueChanged -= OnInteractionCountChanged;
+        base.OnDestroy();
+    }
 
-        ShowPrompt($" {name} ile etkileşim sağlandı! ({interactionCount}/{totalRequired})");
+    [ServerRpc(RequireOwnership = false)]
+    public void RegisterInteractionServerRpc(string objectName, ServerRpcParams rpcParams = default)
+    {
+        if (!IsServer) return;
 
-        if (interactionCount >= totalRequired)
+        interactionCount.Value++;
+
+        // Tüm clientlere mesaj gönder
+        ShowPromptClientRpc($"{objectName} ile etkileşim sağlandı! ({interactionCount.Value}/{totalRequired})");
+
+        if (interactionCount.Value >= totalRequired)
         {
-            ShowPrompt(" Tüm objeler tamamlandı! Çardağa git!");
-
-            if (cardakObject != null)
-                cardakObject.SetActive(true);
-
-            if (cardakSpecialObject != null)
-                cardakSpecialObject.SetActive(true);
-
-            if (thirdPanelObject != null)
-                thirdPanelObject.SetActive(true);
+            ShowPromptClientRpc("Tüm objeler tamamlandı! Çardağa git!");
+            ActivateObjectsClientRpc();
         }
+    }
+
+    [ClientRpc]
+    private void ShowPromptClientRpc(string message)
+    {
+        ShowPrompt(message);
+    }
+
+    [ClientRpc]
+    private void ActivateObjectsClientRpc()
+    {
+        if (cardakObject != null)
+            cardakObject.SetActive(true);
+        if (cardakSpecialObject != null)
+            cardakSpecialObject.SetActive(true);
+        if (thirdPanelObject != null)
+            thirdPanelObject.SetActive(true);
+    }
+
+    private void OnInteractionCountChanged(int oldValue, int newValue)
+    {
+        // İsteğe bağlı: NetworkVariable değiştiğinde ek işlemler
     }
 
     private void ShowPrompt(string message)
@@ -62,6 +90,3 @@ public class PuzzleManager : MonoBehaviour
             puzzlePromptText.gameObject.SetActive(false);
     }
 }
-
-
-

@@ -1,51 +1,53 @@
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class SwitchManager : MonoBehaviour
+public class SwitchManager : NetworkBehaviour
 {
     private Dictionary<int, bool> switchStates = new Dictionary<int, bool>();
 
     [Header("Door Logic")]
-    [SerializeField] private List<int> mustBeUp; // Bu switch ID'leri yukarýda olmalý
-    [SerializeField] private Animator doorAnimator; // Baðlý kapýnýn animatörü
-    [SerializeField] private string doorTriggerName = "OpenDungeonDoor"; // Kapý açma trigger'ý
+    [SerializeField] private List<int> mustBeUp;
+    [SerializeField] private Animator doorAnimator;
+    [SerializeField] private string doorTriggerName = "OpenDungeonDoor";
 
-    void Awake()
+    public override void OnNetworkSpawn()
     {
-        // Baþlangýçta tüm switch'ler false (aþaðýda)
-        for (int i = 1; i <= 9; i++)
-            switchStates[i] = false;
+        if (IsServer)
+        {
+            for (int i = 1; i <= 9; i++)
+                switchStates[i] = false;
+        }
     }
 
-    public void UpdateSwitchState(int id, bool isUp)
+    [ServerRpc(RequireOwnership = false)]
+    public void UpdateSwitchStateServerRpc(int id, bool isUp)
     {
         switchStates[id] = isUp;
         CheckDoorCondition();
     }
 
-    void CheckDoorCondition()
+    private void CheckDoorCondition()
     {
-        // Belirlenen switch'ler yukarýda olmalý
         foreach (int id in mustBeUp)
         {
             if (!switchStates.ContainsKey(id) || !switchStates[id])
                 return;
         }
 
-        // Diðer tüm switch'ler aþaðýda olmalý
         for (int i = 1; i <= 9; i++)
         {
             if (!mustBeUp.Contains(i) && switchStates[i])
                 return;
         }
 
-        // Þartlar saðlandý, kapýyý aç
-        OpenDoor();
+        OpenDoorClientRpc();
     }
 
-    void OpenDoor()
+    [ClientRpc]
+    private void OpenDoorClientRpc()
     {
         Debug.Log("Kapý Açýldý: " + doorTriggerName);
-        doorAnimator.SetTrigger(doorTriggerName);
+        doorAnimator.Play(doorTriggerName);
     }
 }

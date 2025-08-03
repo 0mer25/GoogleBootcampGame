@@ -295,6 +295,11 @@ MonoBehaviour:
   lobbyPanel: {fileID: 1082419911}
   btnPlay: {fileID: 977885859}
   btnBackFromLobby: {fileID: 1141446997}
+  btnCreate: {fileID: 0}
+  btnJoin: {fileID: 0}
+  Canvas: {fileID: 0}
+  musicAudioSource: {fileID: 0}
+  mainMenuMusic: {fileID: 0}
 --- !u!4 &339129611
 Transform:
   m_ObjectHideFlags: 0
@@ -907,7 +912,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07ba299ebf2333c4988b51c5459f8a74, type: 2}
   m_sharedMaterial: {fileID: -8473858335388156252, guid: 07ba299ebf2333c4988b51c5459f8a74, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -8473858335388156252, guid: 07ba299ebf2333c4988b51c5459f8a74, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -1164,7 +1170,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07ba299ebf2333c4988b51c5459f8a74, type: 2}
   m_sharedMaterial: {fileID: -8473858335388156252, guid: 07ba299ebf2333c4988b51c5459f8a74, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -8473858335388156252, guid: 07ba299ebf2333c4988b51c5459f8a74, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -1860,7 +1867,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07ba299ebf2333c4988b51c5459f8a74, type: 2}
   m_sharedMaterial: {fileID: -8473858335388156252, guid: 07ba299ebf2333c4988b51c5459f8a74, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -8473858335388156252, guid: 07ba299ebf2333c4988b51c5459f8a74, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -1997,7 +2005,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 07ba299ebf2333c4988b51c5459f8a74, type: 2}
   m_sharedMaterial: {fileID: -8473858335388156252, guid: 07ba299ebf2333c4988b51c5459f8a74, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: -8473858335388156252, guid: 07ba299ebf2333c4988b51c5459f8a74, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:

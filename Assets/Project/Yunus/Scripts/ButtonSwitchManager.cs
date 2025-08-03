@@ -1,7 +1,8 @@
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class ButtonSwitchManager : MonoBehaviour
+public class ButtonSwitchManager : NetworkBehaviour
 {
     public static ButtonSwitchManager Instance;
 
@@ -10,45 +11,55 @@ public class ButtonSwitchManager : MonoBehaviour
     [Header("Door Logic")]
     [SerializeField] private List<int> mustBeUp; // Inspector'dan ayarlanabilir
     [SerializeField] private Animator doorAnimator;
+    [SerializeField] private string doorTriggerName = "MapDoor";
 
-    void Awake()
+    public override void OnNetworkSpawn()
     {
         if (Instance == null) Instance = this;
 
-        // Baþlangýçta tüm switch'ler false (aþaðýda)
-        for (int i = 1; i <= 9; i++)
-            buttonswitchStates[i] = false;
+        if (IsServer)
+        {
+            for (int i = 1; i <= 9; i++)
+            {
+                buttonswitchStates[i] = false;
+            }
+        }
     }
 
-    public void UpdateSwitchState(int id, bool isUp)
+    [ServerRpc(RequireOwnership = false)]
+    public void UpdateSwitchStateServerRpc(int id, bool isUp)
     {
         buttonswitchStates[id] = isUp;
         CheckDoorCondition();
     }
 
-    void CheckDoorCondition()
+    private void CheckDoorCondition()
     {
-        // Belirlenen switch'ler yukarýda olmalý
+        // Gerekli tüm switch'ler yukarýda mý?
         foreach (int id in mustBeUp)
         {
             if (!buttonswitchStates.ContainsKey(id) || !buttonswitchStates[id])
-                return; // Þart saðlanmýyor
+                return;
         }
 
-        // Diðer tüm switch'ler aþaðýda olmalý
+        // Diðer tüm switch'ler aþaðýda mý?
         for (int i = 1; i <= 9; i++)
         {
-            if (!mustBeUp.Contains(i) && buttonswitchStates[i])
-                return; // Aþaðýda olmasý gereken switch yukarýda
+            if (!mustBeUp.Contains(i) && buttonswitchStates.ContainsKey(i) && buttonswitchStates[i])
+                return;
         }
 
-        // Þartlar saðlandý, kapýyý aç
-        OpenDoor();
+        // Kapýyý tüm client'larda aç
+        OpenDoorClientRpc();
     }
 
-    void OpenDoor()
+    [ClientRpc]
+    private void OpenDoorClientRpc()
     {
-        Debug.Log("Kapý Açýldý!");
-        doorAnimator.SetTrigger("MapDoor");
+        if (doorAnimator != null)
+        {
+            Debug.Log("Kapý Açýldý (ClientRPC)!");
+            doorAnimator.Play(doorTriggerName);
+        }
     }
 }

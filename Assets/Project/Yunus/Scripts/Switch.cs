@@ -1,62 +1,96 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class Switch : MonoBehaviour
+public class Switch : NetworkBehaviour
 {
     public int switchID;
     public SwitchManager manager;
 
-    public bool isUp = false;
-    public bool isPlayerNearby = false;
-
     private Animator animator;
+    private NetworkVariable<bool> isUp = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+
+    public bool isPlayerNearby = false;
 
     void Start()
     {
         animator = GetComponent<Animator>();
+        isUp.OnValueChanged += OnSwitchStateChanged;
     }
 
-    public void ToggleSwitch()
+    void OnDestroy()
     {
-        isUp = !isUp;
+        isUp.OnValueChanged -= OnSwitchStateChanged;
+    }
 
-        if (manager != null)
-        {
-            manager.UpdateSwitchState(switchID, isUp);
-        }
-
-        // Animasyonu oynat
+    private void OnSwitchStateChanged(bool previousValue, bool newValue)
+    {
         if (animator != null)
         {
-            if (isUp)
+            if (newValue)
                 animator.Play("UpSwitch");
             else
                 animator.Play("DownSwitch");
         }
 
-        Debug.Log("Switch " + switchID + " durumu: " + (isUp ? "Yukarý" : "Aþaðý"));
+        Debug.Log("Switch " + switchID + " durumu: " + (newValue ? "Yukarý" : "Aþaðý"));
     }
 
-    void Update()
+    public void ToggleSwitch()
     {
-        if (isPlayerNearby && Input.GetKeyDown(KeyCode.E))
+        if (!IsOwner) return; // Sadece oyuncunun kendisi tetikleyebilir
+
+        ToggleSwitchServerRpc();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void ToggleSwitchServerRpc(ServerRpcParams rpcParams = default)
+    {
+        isUp.Value = !isUp.Value;
+
+        if (manager != null)
         {
-            ToggleSwitch();
+            manager.UpdateSwitchStateServerRpc(switchID, isUp.Value);
         }
     }
 
+
+    void Update()
+    {
+        if (IsClient && isPlayerNearby && Input.GetKeyDown(KeyCode.E))
+        {
+            ToggleSwitchServerRpc(); // Direkt sunucuya isteði gönder
+        }
+    }
+
+
     void OnTriggerEnter(Collider other)
     {
+        if (!IsServer) return;
+
         if (other.CompareTag("Player"))
         {
-            isPlayerNearby = true;
+            ulong clientId = other.GetComponent<NetworkObject>().OwnerClientId;
+            SetNearbyClientRpc(true, clientId);
         }
     }
 
     void OnTriggerExit(Collider other)
     {
+        if (!IsServer) return;
+
         if (other.CompareTag("Player"))
         {
-            isPlayerNearby = false;
+            ulong clientId = other.GetComponent<NetworkObject>().OwnerClientId;
+            SetNearbyClientRpc(false, clientId);
         }
     }
+
+    [ClientRpc]
+    void SetNearbyClientRpc(bool state, ulong clientId)
+    {
+        if (NetworkManager.Singleton.LocalClientId != clientId) return;
+
+        isPlayerNearby = state;
+    }
+
 }

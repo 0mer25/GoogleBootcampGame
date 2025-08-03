@@ -1,18 +1,21 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class R_SwingController : MonoBehaviour
+public class R_SwingController : NetworkBehaviour
 {
     public Transform swingSeat;
     public float swingSpeed = 2f;
     public float swingAmount = 0.3f;
 
-    private bool isSwinging = false;
+    private NetworkVariable<bool> isSwinging = new NetworkVariable<bool>();
     private float timer = 0f;
     private Vector3 originalCamPos;
 
     void Update()
     {
-        if (isSwinging)
+        if (!IsOwner) return;
+
+        if (isSwinging.Value)
         {
             timer += Time.deltaTime * swingSpeed;
             float swingOffset = Mathf.Sin(timer) * swingAmount;
@@ -20,16 +23,36 @@ public class R_SwingController : MonoBehaviour
         }
     }
 
-    public void StartSwing()
+    [ServerRpc(RequireOwnership = false)]
+    public void StartSwingServerRpc(ulong clientId)
     {
-        originalCamPos = Camera.main.transform.localPosition;
-        isSwinging = true;
-        timer = 0f;
+        isSwinging.Value = true;
+        StartSwingClientRpc(clientId);
     }
 
-    public void StopSwing()
+    [ServerRpc(RequireOwnership = false)]
+    public void StopSwingServerRpc(ulong clientId)
     {
-        isSwinging = false;
-        Camera.main.transform.localPosition = originalCamPos;
+        isSwinging.Value = false;
+        StopSwingClientRpc(clientId);
+    }
+
+    [ClientRpc]
+    void StartSwingClientRpc(ulong clientId)
+    {
+        if (NetworkManager.Singleton.LocalClientId == clientId)
+        {
+            originalCamPos = Camera.main.transform.localPosition;
+            timer = 0f;
+        }
+    }
+
+    [ClientRpc]
+    void StopSwingClientRpc(ulong clientId)
+    {
+        if (NetworkManager.Singleton.LocalClientId == clientId)
+        {
+            Camera.main.transform.localPosition = originalCamPos;
+        }
     }
 }

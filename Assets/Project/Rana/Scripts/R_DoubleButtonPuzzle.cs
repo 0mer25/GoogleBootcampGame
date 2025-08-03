@@ -1,42 +1,72 @@
-﻿using UnityEngine;
+﻿using Unity.Netcode;
+using UnityEngine;
 
-public class R_DoubleButtonPuzzle : MonoBehaviour
+public class R_DoubleButtonPuzzle : NetworkBehaviour
 {
-    [Header("Buton Takibi")]
-    public bool[] buttonStates = new bool[2];
+    [Header("Button States")]
+    private NetworkVariable<bool> button1State = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
+    private NetworkVariable<bool> button2State = new NetworkVariable<bool>(false, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
-    [Header("Efektler")]
-    public GameObject portalLight;              // Kapının ortasındaki ışık
-    public ParticleSystem portalParticles;      // İsteğe bağlı görsel efekt
-
-    [Header("Kapanış Trigger")]
-    public GameObject finalTrigger;             // Karanlık için aktif olacak trigger
+    [Header("Door Settings")]
+    public Animator doorAnimator;
+    public string doorOpenAnimationName = "DoorOpen";
 
     private bool isPuzzleSolved = false;
 
-    public void SetButtonState(int index, bool state)
+    public override void OnNetworkSpawn()
     {
-        buttonStates[index] = state;
+        if (IsClient)
+        {
+            button1State.OnValueChanged += OnButton1StateChanged;
+            button2State.OnValueChanged += OnButton2StateChanged;
+        }
+    }
 
-        if (!isPuzzleSolved && buttonStates[0] && buttonStates[1])
+    public override void OnNetworkDespawn()
+    {
+        if (IsClient)
+        {
+            button1State.OnValueChanged -= OnButton1StateChanged;
+            button2State.OnValueChanged -= OnButton2StateChanged;
+        }
+    }
+
+    private void OnButton1StateChanged(bool previousValue, bool newValue)
+    {
+        Debug.Log("Button 1 durumu: " + (newValue ? "Basılı" : "Bırakıldı"));
+        CheckPuzzleComplete();
+    }
+
+    private void OnButton2StateChanged(bool previousValue, bool newValue)
+    {
+        Debug.Log("Button 2 durumu: " + (newValue ? "Basılı" : "Bırakıldı"));
+        CheckPuzzleComplete();
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    public void SetButtonStateServerRpc(int buttonIndex, bool state)
+    {
+        if (buttonIndex == 0)
+            button1State.Value = state;
+        else if (buttonIndex == 1)
+            button2State.Value = state;
+    }
+
+    private void CheckPuzzleComplete()
+    {
+        if (!isPuzzleSolved && button1State.Value && button2State.Value)
         {
             SolvePuzzle();
         }
     }
 
-    void SolvePuzzle()
+    private void SolvePuzzle()
     {
         isPuzzleSolved = true;
-        Debug.Log("🎉 Puzzle çözüldü! Geçit ışığı yanıyor!");
+        Debug.Log("🎉 Puzzle çözüldü! Kapı açılıyor!");
 
-        if (portalLight != null)
-            portalLight.SetActive(true);
-
-        if (portalParticles != null)
-            portalParticles.Play();
-
-        if (finalTrigger != null)
-            finalTrigger.SetActive(true);
+        if (doorAnimator != null)
+            doorAnimator.Play(doorOpenAnimationName);
     }
 }
 
