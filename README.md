@@ -4,11 +4,8 @@
 **Toplanamayanlar**
 
 ## Takım Üyeleri
-- **Rana Özcan** - Scrum Master  
-- **Yunus Emre Yıldırım** - Product Owner  
-- **Batuhan Çetinkaya** - Developer  
-- **Ömer Yirmibeş** - Developer  
-- **Arzu Ekinli** - Developer  
+- **Rana Özcan** - Scrum Master-Developer  
+- **Yunus Emre Yıldırım** - Product Owner-Developer  
 
 ## Oyun İsmi
 **Henüz bulunmadı**
@@ -20,12 +17,12 @@
 ## Oyun Özellikleri
 - 3D birinci şahıs kamera ile oynanış
 - Co-op veya rekabetçi multiplayer deneyimi
-- Oyuncular arasında görev tamamlama ve puan toplama temelli mücadele
+- Oyuncular arasında görev tamamlama temelli mücadele
 
 
 ## Hedef Kitle
 - Eğlenceli ve hızlı tempolu çok oyunculu oyunlara ilgi duyanlar
-- Co-op veya rekabetçi mekanikleri deneyimlemek isteyen arkadaş grupları
+- Co-op oyun deneyimlemek isteyen arkadaş grupları
 - Basit görev temelli, puzzle benzeri oyunlardan keyif alan casual oyuncular
 - PC oyuncuları
 - 7 yaş ve üzeri kullanıcılar
@@ -96,8 +93,6 @@ Resmi olarak her gün yapılan Daily Scrum toplantılarımız olmadı ancak ekip
 - Gelecek Sprint İçin: Bitmemiş işler önceliklendirilip devam edilecek. Görev tamamlama için daha kısa süreli mini hedefler belirlenecek.
 
 ---
-
-Hazırlayan: Scrum Master - Rana
 
 
 **Sprint Retrospective**
@@ -210,3 +205,107 @@ Sprint sonunda aşağıdaki geliştirmeler başarıyla tamamlandı:
 - Multiplayer eklenecek
 - Extra leveller tasarlanacak.
 - Karakter modeli eklenecek.
+
+# 🏁 Final Sprint (Sprint 3) – Oyun Projesi Tamamlama Raporu
+
+## 🎮 Proje Özeti
+Bu proje, çizgi roman hikayeyle başlayıp 4 ana bölümden oluşan co-op puzzle oyunudur. Hikaye, bir abi-kardeşin kaybolan çocukların gizemini çözmek için parkta başladığı macerayı konu alır. Oyuncular birlikte çalışarak çeşitli bulmacaları çözer, yeni alanlar açar ve final sahnesinde parkı eski haline döndürür.
+
+---
+
+## 🎯 Sprint Hedefleri
+Bu son sprintin amacı, oyunu tamamlayarak oynanabilir ve sunuma hazır hale getirmekti.  
+Hedefler:
+- Oyun atmosferini tamamlamak (sesler ve görsel efektler)
+- Multiplayer deneyimini hatasız hale getirmek
+- Karakter modeli ve animasyonları eklemek
+- Bölüm tasarımı ve ara sahneleri tamamlamak
+- Performans optimizasyonu yapmak
+
+---
+
+## 📋 Sprint Planı
+
+| Durum        | Görevler                                                    |
+|--------------|-------------------------------------------------------------|
+| Yapılacaklar | -                                                           |
+| Yapılıyor    | Son optimizasyon testleri, hata düzeltmeleri                |
+| Yapıldı      | Ortam Sesleri, Ana Menü–Lobi Geçişi, Karakter Modeli, Multiplayer Geliştirmeleri, Ekstra Level Tasarımı, Ara Sahne, Puzzle Akış Finalizasyonu |
+
+---
+
+## 🧮 Tahmini Puanlama
+
+| Görev                      | Puan | Açıklama                                                                 |
+|----------------------------|------|--------------------------------------------------------------------------|
+| Ortam Sesleri              | 5    | Bölümlere özel sesler eklendi, atmosfer tamamlandı                      |
+| VFX Efektleri              | 5    | Görsel efektlerle etkileşimler zenginleştirildi                         |
+| Ana Menü–Lobi Geçişi       | 4    | Menü akışı ve bağlantı düzenlendi                                       |
+| Karakter Modeli            | 6    | Model ve animasyonlar entegre edildi                                    |
+| Multiplayer Geliştirmeleri | 10   | Senkronizasyon ve bağlantı testleri tamamlandı                         |
+| Ekstra Level Tasarımı      | 8    | Yeni ve final bölüm tamamlandı                                          |
+| Ara Sahne ve Hikaye Akışı  | 5    | Çizgi roman tarzı sahneler eklendi                                      |
+| Oyun İçi Optimizasyonlar   | 3    | FPS ve performans iyileştirmeleri yapıldı                               |
+
+**Toplam:** 46 story point
+
+---
+
+### ☕ Daily Scrum
+Takım olarak çoğu akşam kısa değerlendirme konuşmaları gerçekleştirildi. Teams ve WhatsApp üzerinden yapılan bu konuşmalarda görevlerin durumu, yaşanan problemler ve çözüm yolları paylaşıldı.
+Daily Scrum notlarımızı görmek için [buraya tıklayın](https://imgur.com/a/daily-scrum-QK5qE7o).
+
+## 🖼️ Tamamlanan Özellikler
+
+- 🌟 **Atmosfer:** Ortam sesleri, arka plan müzikleri ile oyun dünyası canlandırıldı.  
+- 🧍 **Karakter:** Yeni model ve animasyonlarla oynanış deneyimi iyileştirildi.  
+- 🔗 **Multiplayer:** Oyuncular arasında sorunsuz bağlantı ve senkronizasyon sağlandı.  
+- 🧩 **Level Tasarımı:** 4 ana bölüm tamamlandı, tüm puzzle akışları entegre edildi.  
+- 📖 **Ara Sahne:** Çizgi roman tarzı giriş ve bitiş sahneleri eklendi.  
+- 🎛 **UI Akışı:** Ana menüden lobiye ve oyuna geçişler sorunsuz hale getirildi.  
+
+---
+
+## ✅ Sprint Review
+
+- Tüm planlanan özellikler başarıyla tamamlandı  
+- Multiplayer sistemi kararlı şekilde çalışıyor  
+- Hikaye akışı çizgi roman ara sahnelerle tamamlandı  
+- Oyun sunuma ve oynanış testlerine hazır ✅
+
+---
+
+## 🔍 Sprint Retrospective
+
+### İyi Gidenler
+- Takım çalışması ve iletişim güçlüydü  
+- Multiplayer sorunları çözüldü  
+- Görsel ve işitsel atmosfer başarılı şekilde tamamlandı  
+
+### Geliştirilecek Noktalar
+- Puzzle prototiplerinin önceki sprintlerde daha erken test edilmesi süreci hızlandırabilirdi  
+- Final testleri için daha geniş çaplı kullanıcı denemeleri yapılabilirdi  
+
+---
+
+## 🚀 Proje Durumu
+🎮 **Oyun tamamlandı ve oynanabilir durumda.**  
+Sunum ve testler için hazır.  
+
+---
+
+
+## 📦 Kullanılan Assetler
+
+| Asset Adı                 | Link                                                                 | Kullanım Alanı                                  |
+|---------------------------|----------------------------------------------------------------------|-------------------------------------------------|
+| Playground Low Poly       | [Asset Store](https://assetstore.unity.com/packages/3d/environments/playground-low-poly-191533) | Ana oyun ortamı (park)                          |
+| Ultimate Low Poly Dungeon | [Asset Store](https://assetstore.unity.com/packages/3d/environments/dungeons/ultimate-low-poly-dungeon-143535) | İç mekân/zindan bölümleri, koridorlar           |
+| Keypad                    | [Asset Store](https://assetstore.unity.com/packages/3d/props/electronics/keypad-free-262151) | Şifre paneli (puzzle)                           |
+| Rune Pack                 | [Kenney](https://kenney.nl/assets/rune-pack)                         | Sembol/rune ikonları, puzzle ipuçları görselleri |
+| Character Model           | [Asset Store]([https://kenney.nl/assets/rune-pack](https://assetstore.unity.com/packages/3d/characters/humanoids/fantasy/stylized-npc-peasant-nolant-demo-252440?srsltid=AfmBOooUmp_iLWaS-6ZZO45n_npocVxzpuHP31gtOXrJs0jQohTJi8jF))                         | Karakter modeli|
+
+
+
+
+
