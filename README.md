@@ -181,10 +181,10 @@ Dört farklı bölüm için çevresel modellemeler ve puzzle senaryoları hazır
 
 **Puzzle Bölümleri:**
 
-- **1. Bölüm:** Oyuncu, renkli şekillerin temsil ettiği sayıları kullanarak doğru kombinasyonu bulmaya çalışır. Haritada yer alan ipuçları arasında yalnızca biri doğru kombinasyonu verir. Doğru sayılarla oluşturulan şifre girildiğinde puzzle çözülür.
-- **2. Bölüm:** Oyuncu, odadaki sembollerle yapılan toplama ve çıkarma işlemlerini çözmek için haritanın farklı yerlerinde bulunan şekil-eşya eşleşmelerini kullanır. Her eşya sayısı, o sembolün değerini temsil eder. Elde edilen 4 haneli şifre, başka bir odadaki 8 anahtarlı switch paneline doğru sırayla uygulanarak çözüm tamamlanır.
-- **3. Bölüm:** Oyuncu, labirent içinde 5 düğmeyi bulup aktive etmelidir; bu düğmelerden 2’si gizli odalarda yer alır. Gizli odalara ulaşmak için iki switch lever’ın doğru sırayla açılması gerekir, böylece duvarlar kayar ve geçitler açılır. Tüm düğmelere basıldığında final kapısı açılır ve bölüm tamamlanır.
-- **4. Bölüm:** Oyuncu paneldeki yeşil ışığın sırasını salıncaktaki diğer oyuncuya doğru zamanda ilettiğinde puzzle çözülür.
+- **1. Bölüm:** Oyuncular panellerdeki puzzle'ları birlikte çözmeye çalışırlar ve son paneldeki bilmeceye göre butonlara çıktıklarında kapılar açılır sonraki bölüme geçerler.
+- **2. Bölüm:** Oyuncu, renkli şekillerin temsil ettiği sayıları kullanarak doğru kombinasyonu bulmaya çalışır. Haritada yer alan ipuçları arasında yalnızca biri doğru kombinasyonu verir. Doğru sayılarla oluşturulan şifre girildiğinde puzzle çözülür.
+- **3. Bölüm:** Oyuncu, odadaki sembollerle yapılan toplama ve çıkarma işlemlerini çözmek için haritanın farklı yerlerinde bulunan şekil-eşya eşleşmelerini kullanır. Her eşya sayısı, o sembolün değerini temsil eder. Elde edilen 4 haneli şifre, başka bir odadaki 8 anahtarlı switch paneline doğru sırayla uygulanarak çözüm tamamlanır.
+- **4. Bölüm:** Oyuncu, labirent içinde 5 düğmeyi bulup aktive etmelidir; bu düğmelerden 2’si gizli odalarda yer alır. Gizli odalara ulaşmak için iki switch lever’ın doğru sırayla açılması gerekir, böylece duvarlar kayar ve geçitler açılır. Tüm düğmelere basıldığında final kapısı açılır ve bölüm tamamlanır.
 
 ---
 
