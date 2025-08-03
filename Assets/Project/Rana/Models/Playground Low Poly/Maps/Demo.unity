@@ -19981,6 +19981,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 258b4ebcd2471e64abb2d20feccb454b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   swingSeat: {fileID: 1048097296}
   swingSpeed: 2
   swingAmount: 0.3
@@ -23013,15 +23014,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6803d6ae1e8b05e45867779dd2c682c4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swingController: {fileID: 1048097300}
+  ShowTopMostFoldoutHeaderGroup: 1
   cameraHolder: {fileID: 540966120}
-  swingPromptUI: {fileID: 494731084}
-  swingExitPromptUI: {fileID: 0}
   audioSource: {fileID: 0}
   correctSound: {fileID: 0}
   wrongSound: {fileID: 0}
-  panelController: {fileID: 1482176576}
   correctTargetIndex: 1
+  swingSpeed: 2
+  swingAmplitude: 0.2
 --- !u!1001 &1195976819
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27962,6 +27962,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80609767f567f9d469bb78c38087e158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   lights:
   - {fileID: 1588645200}
   - {fileID: 609411107}

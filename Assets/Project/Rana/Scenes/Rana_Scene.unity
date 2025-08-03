@@ -2720,6 +2720,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1ef3e69e73ea0140b54cd1ae36fde11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   cardakObject: {fileID: 1847400517}
   puzzlePromptText: {fileID: 946000901}
   totalRequired: 3
@@ -16787,7 +16788,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -27215,7 +27217,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -31481,6 +31484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86557c85ed4da924aa8ef4d99854887b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   puzzleManager: {fileID: 77112278}
   interactionUI: {fileID: 954575899}
 --- !u!1 &838544509
@@ -35993,6 +35997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e37d2ff6a116a2f439fdcbf00560a93e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   buttonIndex: 1
   puzzleManager: {fileID: 1665220885}
 --- !u!65 &941844899
@@ -36198,6 +36203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86557c85ed4da924aa8ef4d99854887b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   puzzleManager: {fileID: 77112278}
   interactionUI: {fileID: 954575899}
 --- !u!1 &945282909
@@ -36292,7 +36298,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -36777,7 +36784,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -39933,6 +39941,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 258b4ebcd2471e64abb2d20feccb454b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   swingSeat: {fileID: 1048097296}
   swingSpeed: 2
   swingAmount: 0.3
@@ -56717,6 +56726,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e37d2ff6a116a2f439fdcbf00560a93e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   buttonIndex: 0
   puzzleManager: {fileID: 1665220885}
 --- !u!65 &1367590482
@@ -57040,7 +57050,8 @@ MonoBehaviour:
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_fontSharedMaterials: []
+  m_fontSharedMaterials:
+  - {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
   m_fontColor32:
@@ -57480,6 +57491,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 86557c85ed4da924aa8ef4d99854887b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   puzzleManager: {fileID: 77112278}
   interactionUI: {fileID: 954575899}
 --- !u!1 &1388544637
@@ -60598,6 +60610,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80609767f567f9d469bb78c38087e158, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
   lights:
   - {fileID: 1588645200}
   - {fileID: 609411107}
@@ -67499,10 +67512,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ab834912ac0fd24e9a2a80f8f70d107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonStates: 0000
-  portalLight: {fileID: 0}
-  portalParticles: {fileID: 0}
-  finalTrigger: {fileID: 0}
+  ShowTopMostFoldoutHeaderGroup: 1
+  doorAnimator: {fileID: 0}
+  doorOpenAnimationName: DoorOpen
 --- !u!4 &1665220886
 Transform:
   m_ObjectHideFlags: 0

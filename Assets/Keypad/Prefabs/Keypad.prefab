@@ -122,9 +122,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 5
-  bttnspeed: 0.1
   moveDist: 0.0025
-  buttonPressedTime: 0.1
+  pressSpeed: 0.1
   keypad: {fileID: 2303921294396319334}
 --- !u!1 &1384933730976451990
 GameObject:
@@ -282,9 +281,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 0
-  bttnspeed: 0.1
   moveDist: 0.0025
-  buttonPressedTime: 0.1
+  pressSpeed: 0.1
   keypad: {fileID: 2303921294396319334}
 --- !u!1 &2225887874147284791
 GameObject:
@@ -702,27 +700,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f664f9a675c7ff4689df5ab3302c58a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  keypadCombo: 5567
+  maxDigits: 6
+  accessGrantedText: Granted
+  accessDeniedText: Denied
+  displayResultTime: 1
+  keypadDisplayText: {fileID: 2303921292967740188}
+  panelMesh: {fileID: 6711368086355063801}
+  screenNormalColor: {r: 0.98, g: 0.5, b: 0.032, a: 1}
+  screenDeniedColor: {r: 1, g: 0, b: 0, a: 1}
+  screenGrantedColor: {r: 0, g: 0.62, b: 0.07, a: 1}
+  audioSource: {fileID: 2303921294396319332}
+  buttonClickedSfx: {fileID: 8300000, guid: 89d62380470be9e47ba7cf3f97105142, type: 3}
+  accessDeniedSfx: {fileID: 8300000, guid: 6badc82930e38c34891f46e1f01f63d3, type: 3}
+  accessGrantedSfx: {fileID: 8300000, guid: 54ccf978c7886364c980d9f84ff32bd3, type: 3}
   onAccessGranted:
     m_PersistentCalls:
       m_Calls: []
   onAccessDenied:
     m_PersistentCalls:
       m_Calls: []
-  keypadCombo: 5567
-  accessGrantedText: Granted
-  accessDeniedText: Denied
-  displayResultTime: 1
-  screenIntensity: 2.2
-  screenNormalColor: {r: 0.98, g: 0.5, b: 0.032, a: 1}
-  screenDeniedColor: {r: 1, g: 0, b: 0, a: 1}
-  screenGrantedColor: {r: 0, g: 0.62, b: 0.07, a: 1}
-  buttonClickedSfx: {fileID: 8300000, guid: 89d62380470be9e47ba7cf3f97105142, type: 3}
-  accessDeniedSfx: {fileID: 8300000, guid: 6badc82930e38c34891f46e1f01f63d3, type: 3}
-  accessGrantedSfx: {fileID: 8300000, guid: 54ccf978c7886364c980d9f84ff32bd3, type: 3}
-  panelMesh: {fileID: 6711368086355063801}
-  keypadDisplayText: {fileID: 2303921292967740188}
-  audioSource: {fileID: 2303921294396319332}
-  keypadTriggerZone: {fileID: 0}
 --- !u!82 &2303921294396319332
 AudioSource:
   m_ObjectHideFlags: 0
@@ -942,9 +939,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 8
-  bttnspeed: 0.1
   moveDist: 0.0025
-  buttonPressedTime: 0.1
+  pressSpeed: 0.1
   keypad: {fileID: 2303921294396319334}
 --- !u!1 &2793745523060149540
 GameObject:
@@ -1068,9 +1064,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 7
-  bttnspeed: 0.1
   moveDist: 0.0025
-  buttonPressedTime: 0.1
+  pressSpeed: 0.1
   keypad: {fileID: 2303921294396319334}
 --- !u!1 &2906794897754377706
 GameObject:
@@ -1194,9 +1189,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 2
-  bttnspeed: 0.1
   moveDist: 0.0025
-  buttonPressedTime: 0.1
+  pressSpeed: 0.1
   keypad: {fileID: 2303921294396319334}
 --- !u!1 &4495529537794917855
 GameObject:
@@ -1320,9 +1314,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 9
-  bttnspeed: 0.1
   moveDist: 0.0025
-  buttonPressedTime: 0.1
+  pressSpeed: 0.1
   keypad: {fileID: 2303921294396319334}
 --- !u!1 &5212895675490974449
 GameObject:
@@ -1446,9 +1439,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: enter
-  bttnspeed: 0.1
   moveDist: 0.0025
-  buttonPressedTime: 0.1
+  pressSpeed: 0.1
   keypad: {fileID: 2303921294396319334}
 --- !u!1 &5270135792841577758
 GameObject:
@@ -1572,9 +1564,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 3
-  bttnspeed: 0.1
   moveDist: 0.0025
-  buttonPressedTime: 0.1
+  pressSpeed: 0.1
   keypad: {fileID: 2303921294396319334}
 --- !u!1 &7441725873264822089
 GameObject:
@@ -1698,9 +1689,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 1
-  bttnspeed: 0.1
   moveDist: 0.0025
-  buttonPressedTime: 0.1
+  pressSpeed: 0.1
   keypad: {fileID: 2303921294396319334}
 --- !u!1 &7479655408705745758
 GameObject:
@@ -1824,9 +1814,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 4
-  bttnspeed: 0.1
   moveDist: 0.0025
-  buttonPressedTime: 0.1
+  pressSpeed: 0.1
   keypad: {fileID: 2303921294396319334}
 --- !u!1 &8051733617637900962
 GameObject:
@@ -1950,7 +1939,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   value: 6
-  bttnspeed: 0.1
   moveDist: 0.0025
-  buttonPressedTime: 0.1
+  pressSpeed: 0.1
   keypad: {fileID: 2303921294396319334}

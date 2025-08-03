@@ -746,17 +746,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2303921294396319333, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
   m_PrefabInstance: {fileID: 65054025}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &65054027 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2303921294396319335, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
-  m_PrefabInstance: {fileID: 65054025}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &65054028 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2303921294396319334, guid: 2cf8072ebed1149479d25d30c324125c, type: 3}
   m_PrefabInstance: {fileID: 65054025}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 65054027}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1f664f9a675c7ff4689df5ab3302c58a, type: 3}
@@ -1467,9 +1462,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ca61414062e6a040ba64ddbf17b6c86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  keypadUI: {fileID: 65054027}
+  ShowTopMostFoldoutHeaderGroup: 1
+  keypadPrefab: {fileID: 0}
   cameraTransform: {fileID: 348583013}
-  targetObject: {fileID: 983613923}
+  doorAnimator: {fileID: 0}
 --- !u!4 &173601312 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1851160921559249840, guid: 3d4998389175ab44ea4d4fc6a1c102cd, type: 3}
@@ -8011,11 +8007,6 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 717916840937405016, guid: e059938ac4b575643a3345b530869d15, type: 3}
   m_PrefabInstance: {fileID: 1368754809}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &983613923 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8358542452837294435, guid: 9dd8a3227dc0aa84099496d08718ad7b, type: 3}
-  m_PrefabInstance: {fileID: 691524771}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &983613929 stripped
 Transform:

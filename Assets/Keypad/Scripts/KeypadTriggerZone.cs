@@ -10,12 +10,22 @@ public class KeypadTriggerZone : NetworkBehaviour
     [Header("Door Animation")]
     [SerializeField] private Animator doorAnimator; // Kapý animatörü
 
+    [Header("Debug Settings")]
+    [SerializeField] private bool enableDebugLogs = true; // Debug loglarý açýp kapatmak için
+
     private GameObject activeKeypad;
     private bool keypadIsOpen = false;
 
     private void Start()
     {
         // Baþlangýçta keypad kapalý
+        DebugLog("KeypadTriggerZone initialized");
+
+        // Prefab kontrolü
+        if (keypadPrefab == null)
+        {
+            Debug.LogError("Keypad Prefab is not assigned in KeypadTriggerZone!");
+        }
     }
 
     private void Update()
@@ -23,41 +33,77 @@ public class KeypadTriggerZone : NetworkBehaviour
         // ESC ile kapatma - sadece keypad açýkken ve local player ise
         if (keypadIsOpen && Input.GetKeyDown(KeyCode.Escape))
         {
+            DebugLog("ESC pressed - closing keypad");
             HideKeypadLocal();
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        // Sadece local player tetikleyebilir
-        var networkObject = other.GetComponent<NetworkObject>();
-        if (networkObject != null && networkObject.IsOwner && other.CompareTag("Player"))
+        DebugLog($"Trigger entered by: {other.name}, Tag: {other.tag}");
+
+        // Player tag kontrolü
+        if (!other.CompareTag("Player"))
         {
-            Debug.Log("Player entered keypad zone");
-            ShowKeypadServerRpc(networkObject.OwnerClientId);
+            DebugLog("Not a player - ignoring");
+            return;
         }
+
+        // NetworkObject kontrolü
+        var networkObject = other.GetComponent<NetworkObject>();
+        if (networkObject == null)
+        {
+            DebugLog("No NetworkObject found on player");
+            return;
+        }
+
+        // Owner kontrolü
+        if (!networkObject.IsOwner)
+        {
+            DebugLog("Not the owner of this player object");
+            return;
+        }
+
+        DebugLog($"Valid player entered keypad zone. Client ID: {networkObject.OwnerClientId}");
+
+        // Eðer zaten keypad açýksa yeni bir tane açma
+        if (keypadIsOpen)
+        {
+            DebugLog("Keypad is already open");
+            return;
+        }
+
+        ShowKeypadServerRpc(networkObject.OwnerClientId);
     }
 
     [ServerRpc(RequireOwnership = false)]
     private void ShowKeypadServerRpc(ulong clientId)
     {
-        Debug.Log($"Server: Showing keypad for client {clientId}");
+        DebugLog($"Server: Showing keypad for client {clientId}");
         ShowKeypadClientRpc(clientId);
     }
 
     [ClientRpc]
     private void ShowKeypadClientRpc(ulong clientId)
     {
+        DebugLog($"Client RPC received. Local Client ID: {NetworkManager.Singleton.LocalClientId}, Target Client ID: {clientId}");
+
         // Sadece belirtilen client keypad'i görür
         if (NetworkManager.Singleton.LocalClientId == clientId)
         {
-            Debug.Log("Client: Showing keypad locally");
+            DebugLog("This client should show the keypad");
             ShowKeypadLocal();
+        }
+        else
+        {
+            DebugLog("This client should NOT show the keypad");
         }
     }
 
     private void ShowKeypadLocal()
     {
+        DebugLog("ShowKeypadLocal called");
+
         if (keypadPrefab == null)
         {
             Debug.LogError("Keypad Prefab is not assigned!");
@@ -70,12 +116,24 @@ public class KeypadTriggerZone : NetworkBehaviour
             return;
         }
 
+        DebugLog("Creating keypad instance...");
+
         // Keypad prefab'ý instantiate et
         activeKeypad = Instantiate(keypadPrefab);
+
+        if (activeKeypad == null)
+        {
+            Debug.LogError("Failed to instantiate keypad prefab!");
+            return;
+        }
+
+        DebugLog($"Keypad instantiated: {activeKeypad.name}");
+
+        // Keypad'i aktif et
         activeKeypad.SetActive(true);
         keypadIsOpen = true;
 
-        Debug.Log("Keypad instantiated and activated");
+        DebugLog("Keypad set to active");
 
         // Kamera pozisyonuna yerleþtir
         PositionKeypadInFrontOfCamera();
@@ -83,27 +141,50 @@ public class KeypadTriggerZone : NetworkBehaviour
         // Mouse cursor'u aç
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+        DebugLog("Cursor unlocked and made visible");
 
         // Keypad script'ine bu trigger zone'u referans ver
         var keypad = activeKeypad.GetComponentInChildren<NavKeypad.Keypad>();
         if (keypad != null)
         {
             keypad.SetTriggerZone(this);
-            Debug.Log("Keypad script reference set");
+            DebugLog("Keypad script reference set");
         }
         else
         {
-            Debug.LogWarning("Keypad script not found in prefab!");
+            // Root'ta da kontrol et
+            keypad = activeKeypad.GetComponent<NavKeypad.Keypad>();
+            if (keypad != null)
+            {
+                keypad.SetTriggerZone(this);
+                DebugLog("Keypad script found on root and reference set");
+            }
+            else
+            {
+                Debug.LogWarning("Keypad script not found in prefab! Checking all children...");
+
+                // Tüm children'larý kontrol et
+                var allKeypadScripts = activeKeypad.GetComponentsInChildren<NavKeypad.Keypad>();
+                DebugLog($"Found {allKeypadScripts.Length} keypad scripts in children");
+
+                if (allKeypadScripts.Length > 0)
+                {
+                    allKeypadScripts[0].SetTriggerZone(this);
+                    DebugLog("First keypad script found and reference set");
+                }
+            }
         }
 
         // Player hareketini durdur
         DisablePlayerMovement();
 
-        Debug.Log("Keypad opened successfully");
+        DebugLog("Keypad opened successfully");
     }
 
     private void PositionKeypadInFrontOfCamera()
     {
+        DebugLog("Positioning keypad in front of camera...");
+
         // Kamera referansýný bul
         Camera mainCamera = null;
 
@@ -136,28 +217,32 @@ public class KeypadTriggerZone : NetworkBehaviour
 
         if (mainCamera != null)
         {
+            DebugLog($"Camera found: {mainCamera.name}");
+
             // Canvas modu kontrolü
             Canvas keypadCanvas = activeKeypad.GetComponent<Canvas>();
 
             if (keypadCanvas != null)
             {
+                DebugLog($"Canvas found with render mode: {keypadCanvas.renderMode}");
+
                 if (keypadCanvas.renderMode == RenderMode.ScreenSpaceOverlay)
                 {
                     // Screen Space Overlay - ekran merkezine koy
-                    Debug.Log("Positioning keypad as Screen Space Overlay");
+                    DebugLog("Positioning keypad as Screen Space Overlay");
                     // Zaten ekranýn merkezinde olacak, ek pozisyonlama gerekmez
                 }
                 else if (keypadCanvas.renderMode == RenderMode.ScreenSpaceCamera)
                 {
                     // Screen Space Camera - kamerayý ata
-                    Debug.Log("Positioning keypad as Screen Space Camera");
+                    DebugLog("Positioning keypad as Screen Space Camera");
                     keypadCanvas.worldCamera = mainCamera;
                     keypadCanvas.planeDistance = 0.5f;
                 }
                 else if (keypadCanvas.renderMode == RenderMode.WorldSpace)
                 {
                     // World Space - kamera önüne yerleþtir
-                    Debug.Log("Positioning keypad as World Space");
+                    DebugLog("Positioning keypad as World Space");
                     activeKeypad.transform.SetParent(mainCamera.transform);
                     activeKeypad.transform.localPosition = new Vector3(0, 0, 0.5f);
                     activeKeypad.transform.localRotation = Quaternion.identity;
@@ -167,30 +252,45 @@ public class KeypadTriggerZone : NetworkBehaviour
             else
             {
                 // Canvas yoksa, direkt world space olarak kamera önüne koy
-                Debug.Log("No canvas found, positioning as world object");
+                DebugLog("No canvas found, positioning as world object");
                 activeKeypad.transform.SetParent(mainCamera.transform);
                 activeKeypad.transform.localPosition = new Vector3(0, 0, 0.5f);
                 activeKeypad.transform.localRotation = Quaternion.identity;
+
+                // Scale'i kontrol et - çok küçükse görünmez
+                if (activeKeypad.transform.localScale.magnitude < 0.01f)
+                {
+                    activeKeypad.transform.localScale = Vector3.one * 0.1f;
+                    DebugLog("Scale adjusted for visibility");
+                }
             }
 
-            Debug.Log($"Keypad positioned relative to camera: {mainCamera.name}");
+            DebugLog($"Keypad positioned relative to camera: {mainCamera.name}");
         }
         else
         {
             Debug.LogError("No camera found! Keypad positioning failed.");
+
+            // Kamera bulunamazsa varsayýlan pozisyonda býrak
+            DebugLog("Using default world position for keypad");
         }
     }
 
     private CharacterMovement FindLocalPlayer()
     {
         var allPlayers = FindObjectsOfType<CharacterMovement>();
+        DebugLog($"Found {allPlayers.Length} CharacterMovement components");
+
         foreach (var player in allPlayers)
         {
             if (player.IsOwner)
             {
+                DebugLog($"Local player found: {player.name}");
                 return player;
             }
         }
+
+        DebugLog("No local player found");
         return null;
     }
 
@@ -210,7 +310,11 @@ public class KeypadTriggerZone : NetworkBehaviour
                 animator.SetFloat("MotionSpeed", 0f);
             }
 
-            Debug.Log("Player movement disabled");
+            DebugLog("Player movement disabled");
+        }
+        else
+        {
+            DebugLog("Could not find local player to disable movement");
         }
     }
 
@@ -221,17 +325,23 @@ public class KeypadTriggerZone : NetworkBehaviour
         if (localPlayer != null)
         {
             localPlayer.enabled = true;
-            Debug.Log("Player movement enabled");
+            DebugLog("Player movement enabled");
+        }
+        else
+        {
+            DebugLog("Could not find local player to enable movement");
         }
     }
 
     public void HideKeypadLocal()
     {
+        DebugLog("HideKeypadLocal called");
+
         if (activeKeypad != null)
         {
             Destroy(activeKeypad);
             activeKeypad = null;
-            Debug.Log("Keypad destroyed");
+            DebugLog("Keypad destroyed");
         }
 
         keypadIsOpen = false;
@@ -243,27 +353,27 @@ public class KeypadTriggerZone : NetworkBehaviour
         // Player hareketini geri aç
         EnablePlayerMovement();
 
-        Debug.Log("Keypad closed successfully");
+        DebugLog("Keypad closed successfully");
     }
 
     // Keypad baþarýyla açýldýðýnda çalýþacak
     public void OnKeypadSuccess()
     {
-        Debug.Log("Keypad success - notifying server");
+        DebugLog("Keypad success - notifying server");
         OnKeypadSuccessServerRpc();
     }
 
     [ServerRpc(RequireOwnership = false)]
     private void OnKeypadSuccessServerRpc()
     {
-        Debug.Log("Server: Keypad success received");
+        DebugLog("Server: Keypad success received");
         OnKeypadSuccessClientRpc();
     }
 
     [ClientRpc]
     private void OnKeypadSuccessClientRpc()
     {
-        Debug.Log("Client: Opening door");
+        DebugLog("Client: Opening door");
 
         // Kapý animasyonu
         if (doorAnimator != null)
@@ -273,6 +383,33 @@ public class KeypadTriggerZone : NetworkBehaviour
         else
         {
             Debug.LogWarning("Door animator not assigned!");
+        }
+    }
+
+    private void DebugLog(string message)
+    {
+        if (enableDebugLogs)
+        {
+            Debug.Log($"[KeypadTriggerZone] {message}");
+        }
+    }
+
+    // Inspector'da test etmek için
+    [ContextMenu("Test Show Keypad")]
+    private void TestShowKeypad()
+    {
+        if (Application.isPlaying)
+        {
+            ShowKeypadLocal();
+        }
+    }
+
+    [ContextMenu("Test Hide Keypad")]
+    private void TestHideKeypad()
+    {
+        if (Application.isPlaying)
+        {
+            HideKeypadLocal();
         }
     }
 }

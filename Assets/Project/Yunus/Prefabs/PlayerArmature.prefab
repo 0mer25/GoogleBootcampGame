@@ -126,30 +126,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  MoveSpeed: 2
-  SprintSpeed: 5.335
-  RotationSmoothTime: 0.12
-  SpeedChangeRate: 10
-  Sensitivity: 1
-  LandingAudioClip: {fileID: 8300000, guid: 89d62380470be9e47ba7cf3f97105142, type: 3}
-  FootstepAudioClips: []
-  FootstepAudioVolume: 0.5
-  JumpHeight: 1.2
-  Gravity: -15
-  JumpTimeout: 0.5
-  FallTimeout: 0.15
-  Grounded: 1
-  GroundedOffset: -0.2
-  GroundedRadius: 0.2
-  GroundLayers:
+  walkSpeed: 4
+  sprintSpeed: 6
+  mouseSensitivity: 2
+  jumpHeight: 1.2
+  gravity: -10
+  groundDistance: 0.4
+  groundMask:
     serializedVersion: 2
-    m_Bits: 65
-  MainCamera: {fileID: 4078944300772322984}
-  cameraRoot: {fileID: 9025428618357899533}
-  TopClamp: 70
-  BottomClamp: -30
-  CameraAngleOverride: 0
-  LockCameraPosition: 0
+    m_Bits: 64
+  isGrounded: 1
+  cameraTransform: {fileID: 9025428618357899533}
+  minLookAngle: -80
+  maxLookAngle: 80
+  animator: {fileID: 6815758072471002832}
+  showDebugLogs: 0
 --- !u!114 &-4905128294474679478
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,7 +329,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9025428618357899533}
   - component: {fileID: 4078944300772322984}
-  - component: {fileID: 73463581770011129}
   - component: {fileID: 7330973621982838170}
   m_Layer: 0
   m_Name: Main Camera
@@ -355,14 +345,14 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4196940037796151744}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.563, z: 0.028}
+  m_LocalRotation: {x: 0.026176924, y: 0, z: 0, w: 0.99965733}
+  m_LocalPosition: {x: 0, y: 1.329, z: 0.133}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6845024973453403043}
   m_Father: {fileID: 6682175802383717276}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 3, y: 0, z: 0}
 --- !u!20 &4078944300772322984
 Camera:
   m_ObjectHideFlags: 0
@@ -414,14 +404,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &73463581770011129
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4196940037796151744}
-  m_Enabled: 1
 --- !u!114 &7330973621982838170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -651,31 +633,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5118703793879930390, guid: a203c90a7c5f1ec40ad3b58d16d84f9d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 47.656155
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5118703793879930390, guid: a203c90a7c5f1ec40ad3b58d16d84f9d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.18700016
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5118703793879930390, guid: a203c90a7c5f1ec40ad3b58d16d84f9d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -5.9142146
+      value: 0.675
       objectReference: {fileID: 0}
     - target: {fileID: 5118703793879930390, guid: a203c90a7c5f1ec40ad3b58d16d84f9d, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5118703793879930390, guid: a203c90a7c5f1ec40ad3b58d16d84f9d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5118703793879930390, guid: a203c90a7c5f1ec40ad3b58d16d84f9d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5118703793879930390, guid: a203c90a7c5f1ec40ad3b58d16d84f9d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5118703793879930390, guid: a203c90a7c5f1ec40ad3b58d16d84f9d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
