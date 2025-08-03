@@ -1,4 +1,5 @@
 using Unity.Netcode;
+using Unity.Netcode.Components;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
@@ -118,6 +119,47 @@ public class CharacterMovement : NetworkBehaviour
         {
             MainCamera.gameObject.SetActive(false);
         }
+        if (IsServer)
+        {
+            SpawnManager spawnManager = FindObjectOfType<SpawnManager>();
+            if (spawnManager != null)
+            {
+                Vector3 spawnPosition = spawnManager.GetNextSpawnPosition();
+
+                CharacterController cc = GetComponent<CharacterController>();
+                if (cc != null)
+                {
+                    cc.enabled = false; // Karakteri hareket ettiren sistem geçici olarak kapatılmalı
+                    transform.position = spawnPosition;
+                    cc.enabled = true;
+                }
+                else
+                {
+                    transform.position = spawnPosition;
+                }
+
+                // 🔹 Client'lara pozisyonu bildir
+                SetPositionClientRpc(spawnPosition);
+            }
+        }
+    }
+    [ClientRpc]
+    void SetPositionClientRpc(Vector3 position)
+    {
+        if (!IsServer)
+        {
+            CharacterController cc = GetComponent<CharacterController>();
+            if (cc != null)
+            {
+                cc.enabled = false;
+                transform.position = position;
+                cc.enabled = true;
+            }
+            else
+            {
+                transform.position = position;
+            }
+        }
     }
 
     private void Awake()
@@ -231,6 +273,8 @@ public class CharacterMovement : NetworkBehaviour
         }
     }
 
+    // CharacterMovement.cs içindeki Move() fonksiyonunda bu değişikliği yapın:
+
     private void Move()
     {
         if (!_controller.enabled)
@@ -267,26 +311,29 @@ public class CharacterMovement : NetworkBehaviour
         _animationBlend = Mathf.Lerp(_animationBlend, targetSpeed, Time.deltaTime * SpeedChangeRate);
         if (_animationBlend < 0.01f) _animationBlend = 0f;
 
-        // Hareket yönünü kameraya göre belirle
-        Vector3 forward = MainCamera.transform.forward;
-        Vector3 right = MainCamera.transform.right;
-        forward.y = 0f;
-        right.y = 0f;
-        forward.Normalize();
-        right.Normalize();
-
-        Vector3 moveDirection = forward * _moveInput.y + right * _moveInput.x;
-        moveDirection.Normalize();
-
-        // Hareket uygula
-        _controller.Move(moveDirection * (_speed * Time.deltaTime) +
-                            new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
-
-        // update animator if using character
-        if (_animator)
+        // Hareket yönünü kameraya göre belirle - NULL CHECK EKLE
+        if (MainCamera != null)
         {
-            _animator.SetFloat(_animIDSpeed, _animationBlend);
-            _animator.SetFloat(_animIDMotionSpeed, moveDirection.magnitude);
+            Vector3 forward = MainCamera.transform.forward;
+            Vector3 right = MainCamera.transform.right;
+            forward.y = 0f;
+            right.y = 0f;
+            forward.Normalize();
+            right.Normalize();
+
+            Vector3 moveDirection = forward * _moveInput.y + right * _moveInput.x;
+            moveDirection.Normalize();
+
+            // Hareket uygula
+            _controller.Move(moveDirection * (_speed * Time.deltaTime) +
+                                new Vector3(0.0f, _verticalVelocity, 0.0f) * Time.deltaTime);
+
+            // update animator if using character
+            if (_animator)
+            {
+                _animator.SetFloat(_animIDSpeed, _animationBlend);
+                _animator.SetFloat(_animIDMotionSpeed, moveDirection.magnitude);
+            }
         }
     }
 

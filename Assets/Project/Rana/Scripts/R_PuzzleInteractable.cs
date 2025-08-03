@@ -1,39 +1,67 @@
-﻿using UnityEngine;
+﻿using Unity.Netcode;
+using UnityEngine;
 
-public class PuzzleInteractable : MonoBehaviour
+public class PuzzleInteractable : NetworkBehaviour
 {
     public PuzzleManager puzzleManager;
-    public GameObject interactionUI; 
+    public GameObject interactionUI;
 
     private bool playerNearby = false;
-    private bool interacted = false;
+    private NetworkVariable<bool> interacted = new NetworkVariable<bool>(false,
+        NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Server);
 
     private void Start()
     {
         if (interactionUI != null)
-            interactionUI.SetActive(false); 
+            interactionUI.SetActive(false);
+
+        interacted.OnValueChanged += OnInteractedChanged;
+    }
+
+    public override void OnDestroy()
+    {
+        if (interacted != null)
+            interacted.OnValueChanged -= OnInteractedChanged;
+        base.OnDestroy();
     }
 
     private void Update()
     {
-        if (playerNearby && !interacted && Input.GetKeyDown(KeyCode.E))
+        if (playerNearby && !interacted.Value && Input.GetKeyDown(KeyCode.E))
         {
-            interacted = true;
-            if (interactionUI != null)
-                interactionUI.SetActive(false);
-
-            Debug.Log($"🟢 {gameObject.name} ile etkileşime geçildi.");
-            puzzleManager.RegisterInteraction(gameObject); 
+            InteractServerRpc();
         }
+    }
+
+    [ServerRpc(RequireOwnership = false)]
+    private void InteractServerRpc()
+    {
+        if (!IsServer || interacted.Value) return;
+
+        interacted.Value = true;
+        Debug.Log($"🟢 {gameObject.name} ile etkileşime geçildi.");
+
+        if (puzzleManager != null)
+            puzzleManager.RegisterInteractionServerRpc(gameObject.name);
+    }
+
+    private void OnInteractedChanged(bool oldValue, bool newValue)
+    {
+        if (newValue && interactionUI != null)
+            interactionUI.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !interacted)
+        if (other.CompareTag("Player") && !interacted.Value)
         {
-            playerNearby = true;
-            if (interactionUI != null)
-                interactionUI.SetActive(true); 
+            // Sadece local player için trigger kontrolü
+            if (other.GetComponent<NetworkObject>()?.IsOwner == true)
+            {
+                playerNearby = true;
+                if (interactionUI != null)
+                    interactionUI.SetActive(true);
+            }
         }
     }
 
@@ -41,13 +69,12 @@ public class PuzzleInteractable : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            playerNearby = false;
-            if (interactionUI != null)
-                interactionUI.SetActive(false); 
+            if (other.GetComponent<NetworkObject>()?.IsOwner == true)
+            {
+                playerNearby = false;
+                if (interactionUI != null)
+                    interactionUI.SetActive(false);
+            }
         }
     }
 }
-
-
-
-

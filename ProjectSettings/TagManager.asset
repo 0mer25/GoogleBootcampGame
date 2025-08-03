@@ -6,6 +6,25 @@ TagManager:
   tags:
   - Object
   - Ground
+  - SpawnPoint
+  - SwingTrigger
+  - PuzzleObject
+  - BasketArea
+  - Ball
+  - SwingController
+  - PanelController
+  - SwingPromptUI
+  - SwingExitPromptUI
+  - CardakObject
+  - CardakSpecialObject
+  - ThirdPanelObject
+  - PuzzlePromtText
+  - PuzzleUI
+  - PuzzleUI_ObjectName
+  - PuzzleUI_Tahterevalli
+  - PuzzleUI_Lamba
+  - PuzzleUI_Top
+  - PuzzlePromptText
   layers:
   - Default
   - TransparentFX

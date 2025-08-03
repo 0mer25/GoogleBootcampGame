@@ -1,60 +1,100 @@
 ﻿using UnityEngine;
+using Unity.Netcode;
 
-public class R_PanelController : MonoBehaviour
+public class R_PanelController : NetworkBehaviour
 {
+    [Header("Light Settings")]
     public Renderer[] lights;
     public Material redMat;
     public Material greenMat;
     public float interval = 1f;
 
-    private int currentIndex = 0;
     private bool isLocked = false;
+    private NetworkVariable<int> currentIndex = new NetworkVariable<int>(0,
+        NetworkVariableReadPermission.Everyone,
+        NetworkVariableWritePermission.Server);
 
-    void Start()
+    public override void OnNetworkSpawn()
     {
-        InvokeRepeating("CycleLights", 1f, interval);
+        // Network spawn'da subscription yap
+        currentIndex.OnValueChanged += OnLightIndexChanged;
+
+        // İlk ışık durumunu ayarla
+        UpdateLights(currentIndex.Value);
+
+        // Sadece server'da cycle başlat
+        if (IsServer)
+        {
+            InvokeRepeating(nameof(CycleLightsServer), 1f, interval);
+        }
     }
 
-    void CycleLights()
+    public override void OnNetworkDespawn()
     {
-        if (isLocked || lights == null || lights.Length == 0) return;
+        // Subscription'ı temizle
+        currentIndex.OnValueChanged -= OnLightIndexChanged;
+    }
 
+    void OnLightIndexChanged(int oldIndex, int newIndex)
+    {
+        UpdateLights(newIndex);
+    }
+
+    void UpdateLights(int index)
+    {
+        if (lights == null || lights.Length == 0) return;
+
+        // Tüm ışıkları kırmızı yap
         for (int i = 0; i < lights.Length; i++)
         {
             if (lights[i] != null)
                 lights[i].material = redMat;
         }
 
-        if (lights[currentIndex] != null)
-            lights[currentIndex].material = greenMat;
+        // Mevcut indeksi yeşil yap
+        if (index >= 0 && index < lights.Length && lights[index] != null)
+            lights[index].material = greenMat;
+    }
 
-        currentIndex = (currentIndex + 1) % lights.Length;
+    void CycleLightsServer()
+    {
+        if (isLocked || lights == null || lights.Length == 0) return;
+        currentIndex.Value = (currentIndex.Value + 1) % lights.Length;
     }
 
     public int GetCurrentLightIndex()
     {
-        return currentIndex == 0 ? lights.Length - 1 : currentIndex - 1;
+        return currentIndex.Value;
     }
 
     public void GoToNextStep()
     {
-        CancelInvoke("CycleLights");
+        if (!IsServer) return;
+
+        CancelInvoke(nameof(CycleLightsServer));
         isLocked = true;
 
-        int greenIndex = GetCurrentLightIndex();
+        // Mevcut yeşil ışığı sabitle
+        int greenIndex = currentIndex.Value;
+        SetLightsStateClientRpc(greenIndex);
+
+        Debug.Log("🎯 Puzzle kilitlendi, doğru ışık sabitlendi!");
+    }
+
+    [ClientRpc]
+    void SetLightsStateClientRpc(int greenIndex)
+    {
+        if (lights == null || lights.Length == 0) return;
+
         for (int i = 0; i < lights.Length; i++)
         {
             if (lights[i] != null)
                 lights[i].material = (i == greenIndex) ? greenMat : redMat;
         }
-
-        Debug.Log("🎯 Puzzle kilitlendi, doğru ışık sabitlendi!");
     }
+
     public bool IsPuzzleComplete()
     {
         return isLocked;
     }
-
 }
-
-
