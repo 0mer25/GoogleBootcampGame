@@ -5,10 +5,11 @@
 
 ## 👥 Team Members
 
-| Name                   | Title                     | Socials                                                                 |
-|------------------------|---------------------------|-------------------------------------------------------------------------|
-| **Rana Özcan**         | Scrum Master – Developer  | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?logo=linkedin&logoColor=white&style=flat)]([https://www.linkedin.com/in/YOUR-LINKEDIN](https://www.linkedin.com/in/rana-özcan-403b4b30b)) [![GitHub](https://img.shields.io/badge/-GitHub-181717?logo=github&logoColor=white&style=flat)](https://github.com/ranazcn) |
-| **Yunus Emre Yıldırım**| Product Owner – Developer | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?logo=linkedin&logoColor=white&style=flat)]([https://www.linkedin.com/in/YOUR-LINKEDIN](https://www.linkedin.com/in/yunusemreyildirim0)) [![GitHub](https://img.shields.io/badge/-GitHub-181717?logo=github&logoColor=white&style=flat)](https://github.com/Yunusemreeyildirim) |
+| Name                    | Title                      | Socials |
+|-------------------------|----------------------------|---------|
+| **Rana Özcan**          | Scrum Master – Developer   | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?logo=linkedin&logoColor=white&style=flat)](https://www.linkedin.com/in/rana-%C3%B6zcan-403b4b30b) [![GitHub](https://img.shields.io/badge/-GitHub-181717?logo=github&logoColor=white&style=flat)](https://github.com/ranazcn) |
+| **Yunus Emre Yıldırım** | Product Owner – Developer  | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?logo=linkedin&logoColor=white&style=flat)](https://www.linkedin.com/in/yunusemreyildirim0) [![GitHub](https://img.shields.io/badge/-GitHub-181717?logo=github&logoColor=white&style=flat)](https://github.com/Yunusemreeyildirim) |
+
   
 
 ## Oyun İsmi
