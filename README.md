@@ -8,8 +8,9 @@
 
 | Name                    | Title                      | Socials |
 |-------------------------|----------------------------|---------|
-| **Rana Özcan**          | Scrum Master – Developer   | <a href="https://www.linkedin.com/in/rana-%C3%B6zcan-403b4b30b"><img src="https://cdn.simpleicons.org/linkedin/0A66C2" width="24" height="24" alt="LinkedIn"></a>  <picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.simpleicons.org/github/FFFFFF"><source media="(prefers-color-scheme: light)" srcset="https://cdn.simpleicons.org/github/181717"><img src="https://cdn.simpleicons.org/github/181717" width="24" height="24" alt="GitHub"></picture> |
-| **Yunus Emre Yıldırım** | Product Owner – Developer  | <a href="https://www.linkedin.com/in/yunusemreyildirim0"><img src="https://cdn.simpleicons.org/linkedin/0A66C2" width="24" height="24" alt="LinkedIn"></a>  <picture><source media="(prefers-color-scheme: dark)" srcset="https://cdn.simpleicons.org/github/FFFFFF"><source media="(prefers-color-scheme: light)" srcset="https://cdn.simpleicons.org/github/181717"><img src="https://cdn.simpleicons.org/github/181717" width="24" height="24" alt="GitHub"></picture> |
+| **Rana Özcan**          | Scrum Master – Developer   | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?logo=linkedin&logoColor=white&style=flat)](https://www.linkedin.com/in/rana-%C3%B6zcan-403b4b30b) [![GitHub](https://img.shields.io/badge/-GitHub-181717?logo=github&logoColor=white&style=flat)](https://github.com/ranazcn) |
+| **Yunus Emre Yıldırım** | Product Owner – Developer  | [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0A66C2?logo=linkedin&logoColor=white&style=flat)](https://www.linkedin.com/in/yunusemreyildirim0) [![GitHub](https://img.shields.io/badge/-GitHub-181717?logo=github&logoColor=white&style=flat)](https://github.com/Yunusemreeyildirim) |
+
 
 
   
